@@ -16,7 +16,7 @@ export default class Gallery extends Component {
       .then(response => {
         this.setState({ gallery: response.data.hits, isLoading: false });
       })
-      .catch();
+      .catch(console.log);
   }
   render() {
     const { gallery, isLoading } = this.state;
