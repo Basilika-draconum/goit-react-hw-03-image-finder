@@ -5,6 +5,8 @@ import { getGallery } from '../services/galleryService';
 import css from './Button/button.module.scss';
 // import { ColorRing } from './Loader/Loader';
 import { ColorRing } from 'react-loader-spinner';
+import Modal from './Modal/Modal';
+import { ModalDetails } from './Modal/ModalDetails';
 
 export default class Gallery extends Component {
   state = {
@@ -13,11 +15,13 @@ export default class Gallery extends Component {
     error: null,
     page: 1,
     q: '',
+    // totalHits: 1,
+    per_page: 12,
   };
 
-  componentDidMount() {
-    this.fetchGallery();
-  }
+  // componentDidMount() {
+  //   this.fetchGallery();
+  // }
   componentDidUpdate(_, prevState) {
     if (prevState.page !== this.state.page || prevState.q !== this.state.q) {
       this.fetchGallery();
@@ -36,6 +40,7 @@ export default class Gallery extends Component {
       });
       this.setState(prevState => ({
         gallery: [...prevState.gallery, ...res.hits],
+        // totalHits: res.hits.totalHits,
       }));
     } catch (error) {
       this.setState({ error: error.message });
@@ -63,15 +68,20 @@ export default class Gallery extends Component {
         <div>
           <ImageGallery gallery={gallery} />
         </div>
-        <div>
+
+        {Boolean(gallery.length) && (
           <button
             onClick={this.handleLoadMore}
             type="button"
             className={css.button}
+            // hidden={page === totalPages}
           >
             Load More
           </button>
-        </div>
+        )}
+        <Modal>
+          <ModalDetails />
+        </Modal>
       </>
     );
   }

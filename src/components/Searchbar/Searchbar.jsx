@@ -30,6 +30,7 @@ export class Searchbar extends Component {
             placeholder="Search images and photos"
             value={q}
             onChange={this.handleChangeQuery}
+            required
           />
         </form>
       </header>
