@@ -9,11 +9,15 @@ export class Searchbar extends Component {
   handleChangeQuery = e => {
     this.setState({ q: e.target.value });
   };
+  handleSubmit = () => {
+    this.props.onSubmit(this.state.q);
+  };
   render() {
     const { q } = this.state;
+    const { onSubmit } = this.props;
     return (
       <header className={css.searchbar}>
-        <form className={css.searchForm}>
+        <form className={css.searchForm} onSubmit={this.handleSubmit}>
           <button type="submit" className={css.searchForm_button}>
             <span className={css.searchForm_button_label}>Search</span>
           </button>

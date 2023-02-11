@@ -12,40 +12,41 @@ export default class Gallery extends Component {
     isLoading: false,
     error: null,
     page: 1,
+    q: '',
   };
+
   componentDidMount() {
-    this.setState({ isLoading: true });
-    getGallery({ params: { page: this.state.page } })
-      .then(response => {
-        this.setState({ gallery: response.data.hits });
-      })
-      .catch(error => {
-        this.setState({ error: error.message });
-      })
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+    this.fetchGallery();
   }
   componentDidUpdate(_, prevState) {
-    if (prevState.page === this.state.page) {
-      return;
+    if (prevState.page !== this.state.page || prevState.q !== this.state.q) {
+      this.fetchGallery();
     }
-    this.setState({ isLoading: true });
-    getGallery({ params: { page: this.state.page } })
-      .then(response => {
-        this.setState(prevState => ({
-          ...prevState.gallery,
-          ...response.data.hits,
-        }));
-      })
-      .catch(error => {
-        this.setState({ error: error.message });
-      })
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
+    return;
   }
 
+  fetchGallery = async () => {
+    this.setState({ isLoading: true });
+    try {
+      const res = await getGallery({
+        params: {
+          page: this.state.page,
+          q: this.state.q,
+        },
+      });
+      this.setState(prevState => ({
+        gallery: [...prevState.gallery, ...res.hits],
+      }));
+    } catch (error) {
+      this.setState({ error: error.message });
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  };
+
+  handleChangeQuery = q => {
+    this.setState({ q, page: 1, gallery: [] });
+  };
   handleLoadMore = () => {
     this.setState(prev => ({ page: prev.page + 1 }));
   };
@@ -58,7 +59,7 @@ export default class Gallery extends Component {
 
     return (
       <>
-        <Searchbar />
+        <Searchbar onSubmit={this.handleChangeQuery} />
         <div>
           <ImageGallery gallery={gallery} />
         </div>
@@ -67,7 +68,6 @@ export default class Gallery extends Component {
             onClick={this.handleLoadMore}
             type="button"
             className={css.button}
-            disabled={true}
           >
             Load More
           </button>
