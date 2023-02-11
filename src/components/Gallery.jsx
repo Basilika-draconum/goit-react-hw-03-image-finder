@@ -17,6 +17,8 @@ export default class Gallery extends Component {
     q: '',
     // totalHits: 1,
     per_page: 12,
+    showModal: false,
+    modalDetails: null,
   };
 
   // componentDidMount() {
@@ -52,12 +54,26 @@ export default class Gallery extends Component {
   handleChangeQuery = q => {
     this.setState({ q, page: 1, gallery: [] });
   };
+
   handleLoadMore = () => {
     this.setState(prev => ({ page: prev.page + 1 }));
   };
 
+  showImage = ({ tags, largeImageURL }) => {
+    this.setState({
+      modalDetails: { tags, largeImageURL },
+      showModal: true,
+    });
+  };
+  closeImage = () => {
+    this.setState({
+      modalDetails: null,
+      showModal: false,
+    });
+  };
+
   render() {
-    const { gallery, isLoading } = this.state;
+    const { gallery, isLoading, showModal, modalDetails } = this.state;
     if (isLoading) {
       return <ColorRing />;
     }
@@ -66,7 +82,7 @@ export default class Gallery extends Component {
       <>
         <Searchbar onSubmit={this.handleChangeQuery} />
         <div>
-          <ImageGallery gallery={gallery} />
+          <ImageGallery gallery={gallery} showImage={this.showImage} />
         </div>
 
         {Boolean(gallery.length) && (
@@ -79,9 +95,11 @@ export default class Gallery extends Component {
             Load More
           </button>
         )}
-        <Modal>
-          <ModalDetails />
-        </Modal>
+        {showModal && (
+          <Modal closeImage={this.closeImage}>
+            <ModalDetails modalDetails={modalDetails} />
+          </Modal>
+        )}
       </>
     );
   }
