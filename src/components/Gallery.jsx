@@ -90,7 +90,6 @@ export default class Gallery extends Component {
             onClick={this.handleLoadMore}
             type="button"
             className={css.button}
-            // hidden={page === totalPages}
           >
             Load More
           </button>
