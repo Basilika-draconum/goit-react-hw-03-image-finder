@@ -8,9 +8,11 @@ export default class Modal extends Component {
   componentDidMount() {
     document.addEventListener('keydown', this.closeImage);
   }
+
   componentWillUnmount() {
     document.removeEventListener('keydown', this.closeImage);
   }
+
   closeImage = ({ target, currentTarget, code }) => {
     if (target === currentTarget || code === 'Escape') {
       this.props.close();

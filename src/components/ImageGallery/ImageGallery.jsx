@@ -8,7 +8,10 @@ const ImageGallery = ({ gallery, showImage }) => {
         return (
           <li
             onClick={() =>
-              showImage({ tags: item.tags, largeImageURL: item.largeImageURL })
+              showImage({
+                tags: item.tags,
+                largeImageURL: item.largeImageURL,
+              })
             }
             key={item.id + i}
             className={css.imageGalleryItem}

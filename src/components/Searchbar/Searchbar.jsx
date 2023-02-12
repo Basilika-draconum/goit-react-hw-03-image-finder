@@ -9,9 +9,11 @@ export class Searchbar extends Component {
   handleChangeQuery = e => {
     this.setState({ q: e.target.value });
   };
+
   handleSubmit = () => {
     this.props.onSubmit(this.state.q);
   };
+
   render() {
     const { q } = this.state;
     // const { onSubmit } = this.props;

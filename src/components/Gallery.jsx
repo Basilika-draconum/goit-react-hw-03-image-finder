@@ -3,7 +3,7 @@ import { Searchbar } from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import { getGallery } from '../services/galleryService';
 import css from './Button/button.module.scss';
-// import { ColorRing } from './Loader/Loader';
+
 import { ColorRing } from 'react-loader-spinner';
 import Modal from './Modal/Modal';
 import { ModalDetails } from './Modal/ModalDetails';
