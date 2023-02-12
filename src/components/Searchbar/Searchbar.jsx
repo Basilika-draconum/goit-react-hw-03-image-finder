@@ -14,7 +14,7 @@ export class Searchbar extends Component {
   };
   render() {
     const { q } = this.state;
-    const { onSubmit } = this.props;
+    // const { onSubmit } = this.props;
     return (
       <header className={css.searchbar}>
         <form className={css.searchForm} onSubmit={this.handleSubmit}>
