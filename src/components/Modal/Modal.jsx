@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import css from './modal.module.scss';
+import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -13,9 +14,9 @@ export default class Modal extends Component {
     document.removeEventListener('keydown', this.closeImage);
   }
 
-  closeImage = ({ target, currentTarget, code }) => {
-    if (target === currentTarget || code === 'Escape') {
-      this.props.close();
+  closeImage = e => {
+    if (e.target === e.currentTarget || e.code === 'Escape') {
+      this.props.closeImage();
     }
   };
 
@@ -29,3 +30,7 @@ export default class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  closeImage: PropTypes.func.isRequired,
+};

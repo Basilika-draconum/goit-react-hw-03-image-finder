@@ -1,5 +1,6 @@
 import React from 'react';
 import css from './imageGallery.module.scss';
+import PropTypes from 'prop-types';
 
 const ImageGallery = ({ gallery, showImage }) => {
   return (
@@ -29,3 +30,15 @@ const ImageGallery = ({ gallery, showImage }) => {
 };
 
 export default ImageGallery;
+
+ImageGallery.propTypes = {
+  showImage: PropTypes.func.isRequired,
+  gallery: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+    })
+  ),
+};
