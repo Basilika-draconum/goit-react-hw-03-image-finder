@@ -35,7 +35,7 @@ ImageGallery.propTypes = {
   showImage: PropTypes.func.isRequired,
   gallery: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       tags: PropTypes.string.isRequired,
       webformatURL: PropTypes.string.isRequired,
       largeImageURL: PropTypes.string.isRequired,

@@ -14,7 +14,7 @@ export default class Gallery extends Component {
     error: null,
     page: 1,
     q: '',
-    // totalHits: 1,
+    totalPages: 1,
     per_page: 12,
     showModal: false,
     modalDetails: null,
@@ -41,7 +41,7 @@ export default class Gallery extends Component {
       });
       this.setState(prevState => ({
         gallery: [...prevState.gallery, ...res.hits],
-        // totalHits: res.hits.totalHits,
+        totalPages: Math.ceil(res.totalHits / 12),
       }));
     } catch (error) {
       this.setState({ error: error.message });
@@ -73,26 +73,25 @@ export default class Gallery extends Component {
 
   render() {
     const { gallery, isLoading, showModal, modalDetails } = this.state;
-    if (isLoading) {
-      return <ColorRing />;
-    }
-
+    const page = this.state.totalPages === this.state.page;
     return (
       <>
         <Searchbar onSubmit={this.handleChangeQuery} />
         <div>
           <ImageGallery gallery={gallery} showImage={this.showImage} />
         </div>
-
-        {Boolean(gallery.length) && (
-          <button
-            onClick={this.handleLoadMore}
-            type="button"
-            className={css.button}
-          >
-            Load More
-          </button>
-        )}
+        {isLoading && <ColorRing />}
+        {!page
+          ? Boolean(gallery.length) && (
+              <button
+                onClick={this.handleLoadMore}
+                type="button"
+                className={css.button}
+              >
+                Load More
+              </button>
+            )
+          : null}
         {showModal && (
           <Modal closeImage={this.closeImage}>
             <ModalDetails modalDetails={modalDetails} />

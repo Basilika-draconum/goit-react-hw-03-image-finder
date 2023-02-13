@@ -10,7 +10,8 @@ export class Searchbar extends Component {
     this.setState({ q: e.target.value });
   };
 
-  handleSubmit = () => {
+  handleSubmit = e => {
+    e.preventDefault();
     this.props.onSubmit(this.state.q);
   };
 

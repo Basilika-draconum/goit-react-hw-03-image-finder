@@ -15,15 +15,16 @@ export default class Modal extends Component {
   }
 
   closeImage = e => {
+    // console.log(e.target);
     if (e.target === e.currentTarget || e.code === 'Escape') {
       this.props.closeImage();
     }
   };
 
   render() {
-    const { children, closeImage } = this.props;
+    const { children } = this.props;
     return createPortal(
-      <div className={css.overlay} onClick={closeImage}>
+      <div className={css.overlay} onClick={this.closeImage}>
         <div className={css.modal}>{children}</div>
       </div>,
       modalRoot
